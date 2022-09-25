@@ -31,6 +31,7 @@ const getPost = asyncHandler(async (req, res) => {
 const createPost = asyncHandler(async (req, res) => {
     const { title, body } = req.body;
     const id = req.user._id;
+    const author = req.user.name
     const date = Date.now()
     const user = await Users.findOne({ _id: id })
     if (user) {
@@ -38,7 +39,8 @@ const createPost = asyncHandler(async (req, res) => {
             user,
             title,
             body,
-            date
+            date,
+            author
         })
         await newPost.save();
         res.json(newPost);
@@ -108,7 +110,17 @@ const getUserPosts = asyncHandler(async (req, res) => {
 //@access Public
 
 const likePost = asyncHandler(async (req, res) => {
-
+    const pid = req.params.id
+    const uid = req.user._id
+    const postExists = await Posts.findById(pid)
+    if (postExists) {
+        const updatedPost = await Posts.updateOne({ postId: pid }, { $addToSet: { likes: uid } })
+        res.json({ updatedPost })
+    }
+    else {
+        res.status(404)
+        throw new Error("Post not found")
+    }
 })
 
 //@route POST /api/comments/unlike/:postId
@@ -116,7 +128,17 @@ const likePost = asyncHandler(async (req, res) => {
 //@access Public
 
 const unlikePost = asyncHandler(async (req, res) => {
-
+    const pid = req.params.id
+    const uid = req.user._id
+    const postExists = await Posts.findById(pid)
+    if (postExists) {
+        const updatedPost = await Posts.updateOne({ postId: pid }, { $pull: { likes: uid } })
+        res.json({ updatedPost })
+    }
+    else {
+        res.status(404)
+        throw new Error("Post not found")
+    }
 })
 
 //@route POST /api/post/getlike/:postId

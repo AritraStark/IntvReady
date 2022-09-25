@@ -18,6 +18,10 @@ const postSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    author: {
+        type: String,
+        required: true
+    },
     likes: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Users',

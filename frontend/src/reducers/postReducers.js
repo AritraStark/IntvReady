@@ -1,4 +1,4 @@
-import { CREATE_POST_INIT, CREATE_POST_SUCCESS, CREATE_POST_FAIL, GET_ALL_POSTS_INIT, GET_ALL_POSTS_SUCCESS, GET_ALL_POSTS_FAIL, UPDATE_POST_INIT, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL, GET_POST_INIT, GET_POST_SUCCESS, GET_POST_FAIL, DELETE_POST_INIT, DELETE_POST_SUCCESS, DELETE_POST_FAIL, GET_USER_POSTS_FAIL, GET_USER_POSTS_SUCCESS, GET_USER_POSTS_INIT  } from '../constants/postConstants'
+import { CREATE_POST_INIT, CREATE_POST_SUCCESS, CREATE_POST_FAIL, GET_ALL_POSTS_INIT, GET_ALL_POSTS_SUCCESS, GET_ALL_POSTS_FAIL, UPDATE_POST_INIT, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL, GET_POST_INIT, GET_POST_SUCCESS, GET_POST_FAIL, DELETE_POST_INIT, DELETE_POST_SUCCESS, DELETE_POST_FAIL, GET_USER_POSTS_FAIL, GET_USER_POSTS_SUCCESS, GET_USER_POSTS_INIT, LIKE_POST_INIT, LIKE_POST_SUCCESS, LIKE_POST_FAIL, UNLIKE_POST_INIT, UNLIKE_POST_SUCCESS, UNLIKE_POST_FAIL  } from '../constants/postConstants'
 
 export const createPostReducer = (state = {}, action) => {
     switch (action.type) {
@@ -49,7 +49,7 @@ export const getPostReducer = (state = {  }, action) => {
 }
 
 
-export const getFollowerPostsReducer = (state = { posts: [] }, action) => {
+export const getAllPostsReducer = (state = { posts: [] }, action) => {
     switch (action.type) {
         case GET_ALL_POSTS_INIT:
             return {
@@ -143,5 +143,53 @@ export const getUserPostsReducer = ( state={posts:[]} , action) =>{
             }
         default:
             return state
+    }
+}
+
+export const likePostReducer = (state = {}, action) => {
+    switch (action.type) {
+        case LIKE_POST_INIT:
+            return {
+                loading: true,
+                success:false
+            }
+        case LIKE_POST_SUCCESS:
+            return {
+                loading: false,
+                success:true
+            }
+        case LIKE_POST_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+                success:false
+            }
+        default:
+            return state
+            
+    }
+}
+
+export const unlikePostReducer = (state = {}, action) => {
+    switch (action.type) {
+        case UNLIKE_POST_INIT:
+            return {
+                loading: true,
+                success:false
+            }
+        case UNLIKE_POST_SUCCESS:
+            return {
+                loading: false,
+                success:true
+            }
+        case UNLIKE_POST_FAIL:
+            return {
+                loading: false,
+                error: action.payload,
+                success:false
+            }
+        default:
+            return state
+            
     }
 }

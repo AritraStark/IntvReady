@@ -1,34 +1,32 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Header from '../components/Header'
 import PostItem from '../components/PostItem'
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getAllPosts } from '../actions/postActions';
-import { useSelector } from 'react-redux';
 
+const post = {
+    id: 1010101,
+    title: 'Featured post',
+    date: 'Nov 12',
+    description:
+      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+    image: 'https://source.unsplash.com/random',
+    imageLabel: 'Image Text',
+  }
 
-export default function Home(){
-    const dispatch = useDispatch()
+export default function User(){
     const navigate = useNavigate()
-    const {posts} = useSelector(state=>state.allPostsGet)
-    const {success} = useSelector(state=>state.login)
-
-    useEffect(()=>{
-        dispatch(getAllPosts())
-        if(!success)    navigate('/')
-    },[success])
-
     return(
         <div>
-            <Header />
+            <Header title = "Discussion Forum"/>
             <ButtonGroup size='large' variant="text" aria-label="text button group" >
                 <Button sx={{ px:'2rem' }} onClick={()=>navigate('/post/new')}>New Post</Button>
                 <Button sx={{ px:'2rem' }} onClick={()=>navigate('/post/search')}>Search Posts</Button>
             </ButtonGroup>
-            {posts.posts && posts.posts.map((post)=><PostItem post = {post} />)}
-
+            <PostItem post = {post} />
+            <PostItem post = {post} />
+            <PostItem post = {post} />
         </div>
     )
 }

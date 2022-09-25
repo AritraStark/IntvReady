@@ -8,33 +8,32 @@ import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useSelector,useDispatch } from 'react-redux';
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
 
-export default function BasicCard() {
+export default function CommentItem({data}) {
+  const {success, userDetails} = useSelector(state=>state.login)
+
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Fab color="primary" aria-label="add">
+    <Card sx={{ minWidth: 275, display: 'grid', justifyContent: 'space-around' }}>
+      <CardContent sx={{display: 'flex' }}>
+       { success && userDetails._id && <Fab color="primary" aria-label="add">
             <ThumbUpIcon />
-        </Fab>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Author
-        </Typography>
+        </Fab>}
+        <CardContent sx={{display: 'grid' , maxWidth:'40rem'}}>
+          
+          
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {data.text && data.text}
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            {data.author && data.author}
+          </Typography>
+        </CardContent>
         
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Comment Body
-        </Typography>
-        <Fab color="primary" aria-label="add">
+        {success && userDetails._id && <Fab color="primary" aria-label="add">
             <DeleteIcon />
-        </Fab>
+        </Fab>}
       </CardContent>
       
     </Card>

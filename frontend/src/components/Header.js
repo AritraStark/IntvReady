@@ -5,18 +5,34 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import {useNavigate} from 'react-router-dom'
+import Link from '@mui/material/Link';
+import {useDispatch, useSelector} from 'react-redux'
+import Avatar from '@mui/material/Avatar';
+import { logout } from '../actions/userActions';
 
-function Header(props) {
-    const { title } = props;
+
+function Header() {
     const navigate = useNavigate()
+    const {success,userDetails} = useSelector(state=>state.login)
+
+    const dispatch = useDispatch()
+
+    React.useEffect(()=>{
+        if(!success){
+            navigate('/')
+        }
+    },[success])
     return (
         <React.Fragment>
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            {(!userDetails._id)?
             <Button variant="outlined" size="small" onClick={()=>navigate('/signin')}>
             Sign In
-            </Button>
+            </Button>:
+            <Button variant="outlined" size="small" onClick={()=>dispatch(logout)}>
+            Log Out
+            </Button>}
             <Typography
             component="h2"
             variant="h5"
@@ -25,20 +41,22 @@ function Header(props) {
             noWrap
             sx={{ flex: 1 }}
             >
-            {title}
-            </Typography>
+                <Link underline='none' color='inherit' href='/'>
+                    Discussion Forum
+                </Link>
             
+            </Typography>
+            {(!userDetails._id)?
             <Button variant="outlined" size="small" onClick={()=>navigate('/signup')}>
             Sign up
-            </Button>
+            </Button>:
+            <Avatar>{userDetails.name[0]}</Avatar>
+            }
         </Toolbar>
         
         </React.Fragment>
     );
 }
 
-Header.propTypes = {
-  title: PropTypes.string.isRequired,
-};
 
 export default Header;

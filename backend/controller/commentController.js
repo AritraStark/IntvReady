@@ -10,7 +10,7 @@ const getComments = asyncHandler(async (req, res) => {
     const pid = req.params.id
     const postExists = await Posts.findById(pid)
     if (postExists) {
-        const comments = await Comments.find({ postId: id }).sort({ date: 'desc' })
+        const comments = await Comments.find({ pid: pid }).sort({ date: 'desc' })
         res.json({ comments })
     }
     else {
@@ -27,14 +27,16 @@ const getComments = asyncHandler(async (req, res) => {
 const postComment = asyncHandler(async (req, res) => {
     const pid = req.params.id
     const uid = req.user._id
+    const author = req.user.name
     const { text } = req.body
     const date = Date.now()
-    const postExists = await Posts.findById(pid)
+    const postExists = await Posts.findOne({ _id: pid })
     if (postExists) {
         const newComment = new Comments({
             pid,
-            text,
             uid,
+            text,
+            author,
             date
         })
         await newComment.save();
@@ -56,7 +58,7 @@ const likeComment = asyncHandler(async (req, res) => {
     const uid = req.user._id
     const postExists = await Posts.findById(pid)
     if (postExists) {
-        const updatedComment = await Comments.updateOne({ postId: pid }, { $addToSet: { likes: [uid] } })
+        const updatedComment = await Comments.updateOne({ postId: pid }, { $addToSet: { likes: uid } })
         res.json({ updatedComment })
     }
     else {
@@ -74,7 +76,7 @@ const unlikeComment = asyncHandler(async (req, res) => {
     const uid = req.user._id
     const postExists = await Posts.findById(pid)
     if (postExists) {
-        const updatedComment = await Comments.updateOne({ postId: pid }, { $pull: { likes: [uid] } })
+        const updatedComment = await Comments.updateOne({ postId: pid }, { $pull: { likes: uid } })
         res.json({ updatedComment })
     }
     else {
@@ -116,7 +118,7 @@ const checkLike = asyncHandler(async (req, res) => {
 //@access Private
 const deleteComment = asyncHandler(async (req, res) => {
     await Comments.findByIdAndDelete(req.params.id)
-    res.json({ msg: "User removed" })
+    res.json({ msg: "Comment removed" })
 })
 
 export {

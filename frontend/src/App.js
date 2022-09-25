@@ -15,12 +15,12 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/search" element={<Search/>}/>
-          <Route path="/post/new" element={<NewPost/>}/>
+          <Route path="/post/search" element={<Search/>}/>
+          <Route exact path="/post/new" element={<NewPost/>}/>
           <Route path="/post/:id" element={<Post/>}/>
 
           <Route path="/test" element={(
-            <div>aASdsdfsd</div>
+            <div>Test Page</div>
           )}/>
           {/* <Route path="/followers" exact element={}/>*/}
         </Routes>

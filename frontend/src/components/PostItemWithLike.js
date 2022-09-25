@@ -7,39 +7,40 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useNavigate } from 'react-router-dom';
+import Fab from '@mui/material/Fab';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import {useSelector} from 'react-redux'
 
-function PostItem(props) {
-  const { post } = props;
+function PostItemWithLike({data}) {
+  const {success, userDetails} = useSelector(state=>state.login)
   const navigate = useNavigate()
   return (
-    <Grid item xs={12} md={6} m={5}>
-      <CardActionArea component="a" href={"/post/"+post._id}>
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
+    <Grid item xs={12} md={6} m={5}> 
+        <Card sx={{ display: 'flex', justifyContent:'space-between' }}>
+          <CardContent sx={{ display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'space-between'}}>
             <Typography component="h2" variant="h5">
-              {post.title}
+              {data.title&&data.title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {post.date}
+              {data.date&&data.date}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              {post.description}
+              {data.body&&data.body}
             </Typography>
-            <Typography variant="subtitle1" color="primary" onClick={()=>navigate('/post/'+post.id)}>
-              Continue reading...
-            </Typography>
+            {success && userDetails._id && <Fab color="primary" aria-label="add">
+                <ThumbUpIcon />
+            </Fab>}
           </CardContent>
-          <CardMedia
+          {data.image&&<CardMedia
             component="img"
             sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={post.image}
-          />
+            image={data.image}
+          />}
         </Card>
-      </CardActionArea>
     </Grid>
   );
 }
 
 
 
-export default PostItem;
+export default PostItemWithLike;
