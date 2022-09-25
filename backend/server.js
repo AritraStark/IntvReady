@@ -4,8 +4,8 @@ import path from 'path'
 
 import connectDB from './config/db.js'
 
-import postRoutes from './routes/postRoute.js'
-import userRoutes from './routes/userRoute.js'
+import postRoutes from './routes/postRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 import commentRoutes from './routes/commentRoutes.js'
 
 //.env file initialize

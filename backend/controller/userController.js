@@ -84,7 +84,6 @@ const createUser = asyncHandler(async (req, res) => {
         throw new Error("Invalid data")
     }
 
-    res.json(newUser);
 })
 
 
