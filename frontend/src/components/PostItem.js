@@ -19,8 +19,11 @@ function PostItem(props) {
             <Typography component="h2" variant="h5">
               {post.title}
             </Typography>
+            <Typography component="h6" variant="h6">
+              {post.author}
+            </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {post.date}
+              {post.date.substring(0,10)}
             </Typography>
             <Typography variant="subtitle1" paragraph>
               {post.description}
@@ -29,11 +32,7 @@ function PostItem(props) {
               Continue reading...
             </Typography>
           </CardContent>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={post.image}
-          />
+          <img src={post.baseImage} height="200px" />
         </Card>
       </CardActionArea>
     </Grid>

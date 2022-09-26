@@ -15,7 +15,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 function PostItemWithLike({data, handleLikePostClick}) {
   const {success, userDetails} = useSelector(state=>state.login)
   const navigate = useNavigate()
-  const likesArray = data.likes
 
   return (
     <Grid item xs={12} md={6} m={5}> 
@@ -24,8 +23,11 @@ function PostItemWithLike({data, handleLikePostClick}) {
             <Typography component="h2" variant="h5">
               {data.title&&data.title}
             </Typography>
+            <Typography component="h6" variant="h6">
+              {data.author&&data.author}
+            </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              {data.date&&data.date}
+              {data.date&&data.date.substring(0,10)}
             </Typography>
             <Typography variant="subtitle1" paragraph>
               {data.body&&data.body}
@@ -34,18 +36,14 @@ function PostItemWithLike({data, handleLikePostClick}) {
               {success && userDetails._id && <Fab color="primary" aria-label="add" sx={{mx:2}} onClick={handleLikePostClick}>
                   <ThumbUpIcon />
               </Fab>}
-              {likesArray.length}
+              {data.likes&&data.likes.length}
               {userDetails._id === data.user && <Fab color="primary" aria-label="add" sx={{mx:2}}>
                   <DeleteIcon />
               </Fab>}
             </Grid>
             
           </CardContent>
-          {data.image&&<CardMedia
-            component="img"
-            sx={{ width: 160, display: { xs: 'none', sm: 'block' } }}
-            image={data.image}
-          />}
+          {data.baseImage&&<img src={data.baseImage}  height="200px" />}
         </Card>
     </Grid>
   );

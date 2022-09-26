@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
@@ -6,18 +6,39 @@ import Button from '@mui/material/Button';
 import Grid  from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import PostItem from '../components/PostItem';
-
-const post = {
-    id: 1010101,
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  }
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from '../actions/postActions';
 
 export default function Search(){
+    const [res, setRes] = useState([])
+    const [title, setTitle] = useState("")
+    const [author, setAuthor] = useState("")
+    const [text, setText] = useState("")
+    const { posts } = useSelector(state => state.allPostsGet)
+    const dispatch = useDispatch()
+
+    function handleSearch(){
+        const postArray = posts.posts
+        const p = []
+        for (var i=0; i < postArray.length; i++) {
+            if (title&&postArray[i].title.includes(title)) {
+                if (p.indexOf(postArray[i]) === -1) p.push(postArray[i]);
+            }
+            if (author&&postArray[i].author === author) {
+                if (p.indexOf(postArray[i]) === -1) p.push(postArray[i]);
+            }
+            if (text&&postArray[i].body.includes(text)) {
+                if (p.indexOf(postArray[i]) === -1) p.push(postArray[i]);
+            }
+        }
+        if(p.length ===0)   setRes([])
+        else    setRes(p)
+    }
+
+    useEffect(() => {
+        dispatch(getAllPosts())
+    }, [dispatch])
+
     return (
         <div>
             
@@ -31,6 +52,8 @@ export default function Search(){
                     id="Title"
                     label="Title"
                     defaultValue=""
+                    value={title}
+                    onChange={(e)=>setTitle(e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={3}>
@@ -38,6 +61,8 @@ export default function Search(){
                     id="Author"
                     label="Author"
                     defaultValue=""
+                    value={author}
+                    onChange={(e)=>setAuthor(e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={3}>
@@ -45,16 +70,17 @@ export default function Search(){
                     id="Text"
                     label="Text"
                     defaultValue=""
+                    value={text}
+                    onChange={(e)=>setText(e.target.value)}
                     />
                 </Grid>
                 <Grid item xs={3}>
-                    <Button variant="contained" endIcon={<SearchIcon />}>
+                    <Button variant="contained" endIcon={<SearchIcon />} onClick={handleSearch}>
                     Search
                     </Button>
                 </Grid>
             </Grid>
-            
-            <PostItem post = {post}/>
+            {res && res.map((i)=><PostItem post={i}/>)}
             
             
         </div>

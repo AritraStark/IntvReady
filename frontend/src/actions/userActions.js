@@ -125,7 +125,7 @@ export const signup = (name,email,description,password,url) => async(dispatch) =
     }
 }
 
-export const logout = (dispatch) => {
+export const logout = () => async(dispatch) => {
     localStorage.removeItem('userDetails')
     dispatch({
         type: LOGOUT

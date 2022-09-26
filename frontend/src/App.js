@@ -18,7 +18,7 @@ function App() {
           <Route path="/post/search" element={<Search/>}/>
           <Route exact path="/post/new" element={<NewPost/>}/>
           <Route path="/post/:id" element={<Post/>}/>
-
+          
           <Route path="/test" element={(
             <div>Test Page</div>
           )}/>

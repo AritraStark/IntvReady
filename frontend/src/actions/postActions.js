@@ -5,7 +5,7 @@ import{
 }
 from '../constants/postConstants'
 
-export const createPost = (title,body) => async(dispatch,getState) =>{
+export const createPost = (title,body, baseImage) => async(dispatch,getState) =>{
     try{
         dispatch({
             type: CREATE_POST_INIT
@@ -22,7 +22,7 @@ export const createPost = (title,body) => async(dispatch,getState) =>{
             }
         }
 
-        const {data} = await axios.post('/api/posts',{title,body},config)
+        const {data} = await axios.post('/api/posts',{title,body, baseImage },config)
 
         dispatch({
             type: CREATE_POST_SUCCESS,

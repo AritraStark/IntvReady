@@ -32,10 +32,32 @@ export default function SignUp() {
   const navigate = useNavigate()
 
   const {success,post} = useSelector(state=>state.postCreate)
+  const [baseImage, setBaseImage] = useState("");
+
+  const uploadImage = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setBaseImage(base64);
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   function handleNewPostClick(){
     navigate('/')
-    dispatch(createPost(title,body))
+    dispatch(createPost(title,body, baseImage))
     setTitle("")
     setBody("")
   }
@@ -102,7 +124,7 @@ export default function SignUp() {
                     <Button variant="contained" component="label" color='secondary'>
                         Upload
                         <PhotoCamera />
-                        <input hidden accept="image/*" multiple type="file" />
+                        <input hidden type="file" onChange={(e)=>uploadImage(e)}/>
                     </Button>
                 </Grid>
 

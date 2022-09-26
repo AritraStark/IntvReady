@@ -29,7 +29,7 @@ const getPost = asyncHandler(async (req, res) => {
 //@desc Create new post
 //@access Private
 const createPost = asyncHandler(async (req, res) => {
-    const { title, body } = req.body;
+    const { title, body, baseImage } = req.body;
     const id = req.user._id;
     const author = req.user.name
     const date = Date.now()
@@ -39,6 +39,7 @@ const createPost = asyncHandler(async (req, res) => {
             user,
             title,
             body,
+            baseImage,
             date,
             author
         })

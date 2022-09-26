@@ -20,9 +20,8 @@ export default function Post(){
     const navigate = useNavigate()
     const commentCreateStatus = useSelector(state=>state.commentCreate)
     const postLikeStatus = useSelector(state=>state.postLike)
-    const commentLikeStatus = useSelector(state=>state.commentLike)
     const [text, setText] = React.useState()
-
+    
     function handleFormData(e){
         setText(e.target.value)
     }
@@ -35,17 +34,20 @@ export default function Post(){
         dispatch(likePost(id))
     }
 
+    function handleLikeCommentClick(cid){
+        dispatch(likeComment(cid))
+    }
 
 
     useEffect(()=>{
-        if(commentCreateStatus.success || postLikeStatus.success){
+        if(commentCreateStatus.success || postLikeStatus.success ){
             navigate('/post/'+id)
         }
 
         dispatch(getPost(id))
         dispatch(getComments(id))
 
-    },[dispatch, id, commentCreateStatus,postLikeStatus, navigate])
+    },[dispatch, id, commentCreateStatus,postLikeStatus,navigate])
 
     return(
         <div>
@@ -54,7 +56,7 @@ export default function Post(){
             <Typography variant="h5" gutterBottom>
                 Comments :
             </Typography>
-            {comments && comments.comments.map((comment)=><CommentItem data = {comment}/>)}
+            {comments && comments.comments.map((comment)=><CommentItem data = {comment} handleLikeCommentClick={handleLikeCommentClick}/>)}
             {success&&userDetails._id && <AddComment id={id} text ={text} handleCommentClick = {handleAddCommentClick} handleFormData={handleFormData}/>}            
         </div>
     )

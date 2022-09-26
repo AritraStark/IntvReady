@@ -9,20 +9,11 @@ import {useNavigate} from 'react-router-dom'
 import Link from '@mui/material/Link';
 import {useDispatch, useSelector} from 'react-redux'
 import Avatar from '@mui/material/Avatar';
-import { logout } from '../actions/userActions';
 
 
-function Header() {
+function Header({handleLogout}) {
     const navigate = useNavigate()
     const {success,userDetails} = useSelector(state=>state.login)
-
-    const dispatch = useDispatch()
-
-    React.useEffect(()=>{
-        if(!success){
-            navigate('/')
-        }
-    },[success])
     return (
         <React.Fragment>
         <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -30,7 +21,7 @@ function Header() {
             <Button variant="outlined" size="small" onClick={()=>navigate('/signin')}>
             Sign In
             </Button>:
-            <Button variant="outlined" size="small" onClick={()=>dispatch(logout)}>
+            <Button variant="outlined" size="small" onClick={handleLogout}>
             Log Out
             </Button>}
             <Typography
