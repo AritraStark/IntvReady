@@ -54,11 +54,11 @@ const postComment = asyncHandler(async (req, res) => {
 //@access Public
 
 const likeComment = asyncHandler(async (req, res) => {
-    const pid = req.params.id
+    const cid = req.params.id
     const uid = req.user._id
-    const postExists = await Posts.findById(pid)
-    if (postExists) {
-        const updatedComment = await Comments.updateOne({ postId: pid }, { $addToSet: { likes: uid } })
+    const commentExits = await Comments.findById(cid)
+    if (commentExits) {
+        const updatedComment = await Comments.updateOne({ _id: cid }, { $addToSet: { likes: uid } })
         res.json({ updatedComment })
     }
     else {
@@ -72,11 +72,11 @@ const likeComment = asyncHandler(async (req, res) => {
 //@access Public
 
 const unlikeComment = asyncHandler(async (req, res) => {
-    const pid = req.params.id
+    const cid = req.params.id
     const uid = req.user._id
-    const postExists = await Posts.findById(pid)
-    if (postExists) {
-        const updatedComment = await Comments.updateOne({ postId: pid }, { $pull: { likes: uid } })
+    const commentExits = await Comments.findById(cid)
+    if (commentExits) {
+        const updatedComment = await Comments.updateOne({ _id: cid }, { $pull: { likes: uid } })
         res.json({ updatedComment })
     }
     else {

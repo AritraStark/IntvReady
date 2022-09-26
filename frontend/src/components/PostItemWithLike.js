@@ -10,10 +10,13 @@ import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {useSelector} from 'react-redux'
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function PostItemWithLike({data}) {
+function PostItemWithLike({data, handleLikePostClick}) {
   const {success, userDetails} = useSelector(state=>state.login)
   const navigate = useNavigate()
+  const likesArray = data.likes
+
   return (
     <Grid item xs={12} md={6} m={5}> 
         <Card sx={{ display: 'flex', justifyContent:'space-between' }}>
@@ -27,9 +30,16 @@ function PostItemWithLike({data}) {
             <Typography variant="subtitle1" paragraph>
               {data.body&&data.body}
             </Typography>
-            {success && userDetails._id && <Fab color="primary" aria-label="add">
-                <ThumbUpIcon />
-            </Fab>}
+            <Grid gap={2} sx={{ justifyContent:'space-between'}}>
+              {success && userDetails._id && <Fab color="primary" aria-label="add" sx={{mx:2}} onClick={handleLikePostClick}>
+                  <ThumbUpIcon />
+              </Fab>}
+              {likesArray.length}
+              {userDetails._id === data.user && <Fab color="primary" aria-label="add" sx={{mx:2}}>
+                  <DeleteIcon />
+              </Fab>}
+            </Grid>
+            
           </CardContent>
           {data.image&&<CardMedia
             component="img"

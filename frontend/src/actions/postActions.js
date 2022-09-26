@@ -5,7 +5,7 @@ import{
 }
 from '../constants/postConstants'
 
-export const createPost = (title,body,url,file_name) => async(dispatch,getState) =>{
+export const createPost = (title,body) => async(dispatch,getState) =>{
     try{
         dispatch({
             type: CREATE_POST_INIT
@@ -208,7 +208,9 @@ export const likePost = (id) => async(dispatch,getState) =>{
             }
         }
 
-        const {data} = await axios.post(`/api/posts/like/${id}`,config)
+        //Important thing to notice is to pass an empty object
+
+        const {data} = await axios.post(`/api/posts/like/${id}`,{},config)
 
         dispatch({
             type: LIKE_POST_SUCCESS,
@@ -240,8 +242,9 @@ export const unlikePost = (id) => async(dispatch,getState) =>{
                 'x-auth': userDetails.token
             }
         }
-
-        const {data} = await axios.post(`/api/posts/unlike/${id}`,config)
+        
+        //Important thing to notice is to pass an empty object
+        const {data} = await axios.post(`/api/posts/unlike/${id}`,{},config)
 
         dispatch({
             type: UNLIKE_POST_SUCCESS,

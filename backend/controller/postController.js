@@ -114,7 +114,7 @@ const likePost = asyncHandler(async (req, res) => {
     const uid = req.user._id
     const postExists = await Posts.findById(pid)
     if (postExists) {
-        const updatedPost = await Posts.updateOne({ postId: pid }, { $addToSet: { likes: uid } })
+        const updatedPost = await Posts.updateOne({ _id: pid }, { $addToSet: { likes: uid } })
         res.json({ updatedPost })
     }
     else {
@@ -132,7 +132,7 @@ const unlikePost = asyncHandler(async (req, res) => {
     const uid = req.user._id
     const postExists = await Posts.findById(pid)
     if (postExists) {
-        const updatedPost = await Posts.updateOne({ postId: pid }, { $pull: { likes: uid } })
+        const updatedPost = await Posts.updateOne({ _id: pid }, { $pull: { likes: uid } })
         res.json({ updatedPost })
     }
     else {

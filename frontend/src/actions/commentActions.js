@@ -119,7 +119,7 @@ export const getComments = (id) => async(dispatch,getState) => {
     }
 }
 
-export const likePost = (id) => async(dispatch,getState) =>{
+export const likeComment = (id) => async(dispatch,getState) =>{
     try {
         dispatch({
             type: LIKE_COMMENT_INIT
@@ -136,7 +136,7 @@ export const likePost = (id) => async(dispatch,getState) =>{
             }
         }
 
-        const {data} = await axios.post(`/api/posts/like/${id}`,config)
+        const {data} = await axios.post(`/api/comments/like/${id}`, {}, config)
 
         dispatch({
             type: LIKE_COMMENT_SUCCESS,
@@ -152,7 +152,7 @@ export const likePost = (id) => async(dispatch,getState) =>{
     }
 }
 
-export const unlikePost = (id) => async(dispatch,getState) =>{
+export const unlikeComment = (id) => async(dispatch,getState) =>{
     try {
         dispatch({
             type: UNLIKE_COMMENT_INIT
@@ -169,7 +169,7 @@ export const unlikePost = (id) => async(dispatch,getState) =>{
             }
         }
 
-        const {data} = await axios.post(`/api/posts/unlike/${id}`,config)
+        const {data} = await axios.post(`/api/comments/unlike/${id}`,{}, config)
 
         dispatch({
             type: UNLIKE_COMMENT_SUCCESS,

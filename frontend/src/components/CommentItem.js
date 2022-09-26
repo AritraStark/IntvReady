@@ -9,20 +9,24 @@ import Fab from '@mui/material/Fab';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector,useDispatch } from 'react-redux';
+import { likeComment } from '../actions/commentActions';
 
 
 export default function CommentItem({data}) {
   const {success, userDetails} = useSelector(state=>state.login)
+  const [likesArray, setLikesArray] = React.useState(data.likes)
 
   return (
     <Card sx={{ minWidth: 275, display: 'grid', justifyContent: 'space-around' }}>
       <CardContent sx={{display: 'flex' }}>
-       { success && userDetails._id && <Fab color="primary" aria-label="add">
-            <ThumbUpIcon />
-        </Fab>}
         <CardContent sx={{display: 'grid' , maxWidth:'40rem'}}>
-          
-          
+        { success && userDetails._id && <Fab color="primary" aria-label="add" onClick={()=>likeComment(data._id)}>
+              <ThumbUpIcon />
+          </Fab>}
+          {likesArray.length}
+        </CardContent>
+        <CardContent sx={{display: 'grid' , maxWidth:'40rem'}}>
+
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             {data.text && data.text}
           </Typography>
@@ -30,10 +34,11 @@ export default function CommentItem({data}) {
             {data.author && data.author}
           </Typography>
         </CardContent>
-        
-        {success && userDetails._id && <Fab color="primary" aria-label="add">
-            <DeleteIcon />
-        </Fab>}
+        <CardContent sx={{display: 'grid' , maxWidth:'40rem'}}>
+          {success && userDetails._id && <Fab color="primary" aria-label="add">
+              <DeleteIcon />
+          </Fab>} 
+        </CardContent>
       </CardContent>
       
     </Card>

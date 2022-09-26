@@ -34,6 +34,7 @@ export default function SignUp() {
   const {success,post} = useSelector(state=>state.postCreate)
 
   function handleNewPostClick(){
+    navigate('/')
     dispatch(createPost(title,body))
     setTitle("")
     setBody("")

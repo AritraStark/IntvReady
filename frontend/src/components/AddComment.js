@@ -6,24 +6,8 @@ import Fab from '@mui/material/Fab';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import Grid from '@mui/material/Grid';
 import { useDispatch } from 'react-redux';
-import { createComment } from '../actions/commentActions';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-export default function AddComment({id}) {
-  const dispatch = useDispatch()
-  const [text, setText] = React.useState()
-  const navigate = useNavigate()
-
-  const {success} = useSelector(state=>state.commentCreate)
-
-  function handleCommentClick(){
-    dispatch(createComment(id, text))
-  }
-
-  React.useEffect(()=>{
-    if(success === true) navigate(`/post/${id}`)
-  },[success, navigate])
+export default function AddComment({ handleCommentClick, handleFormData}) {
   return (
     <Box
       sx={{
@@ -36,7 +20,7 @@ export default function AddComment({id}) {
         </Typography>
         <Grid container spacing={2} sx = {{padding:'2rem'}}>
             <Grid item xs={10}>
-                <TextField fullWidth label="Comment" id="fullWidth" onChange={(e)=>setText(e.target.value)}/>
+                <TextField fullWidth label="Comment" id="fullWidth" onChange={(e)=>handleFormData(e)}/>
             </Grid>
             <Grid item xs={2}>
                 <Fab color="primary" aria-label="add" onClick={handleCommentClick}>
