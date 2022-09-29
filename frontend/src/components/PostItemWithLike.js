@@ -43,7 +43,7 @@ function PostItemWithLike({data, handleLikePostClick}) {
             </Grid>
             
           </CardContent>
-          {data.baseImage&&<img src={data.baseImage}  height="200px" />}
+          {data.baseImage&&<img src={data.baseImage}  height="200px" alt='Img'/>}
         </Card>
     </Grid>
   );

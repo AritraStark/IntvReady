@@ -15,23 +15,23 @@ export default function Home() {
     const { posts } = useSelector(state => state.allPostsGet)
     const { success } = useSelector(state => state.login)
 
-    function handleLogout(){
+    function handleLogout() {
         dispatch(logout())
     }
     useEffect(() => {
         if (!success) navigate('/')
         dispatch(getAllPosts())
-        
+
     }, [success, dispatch, navigate])
 
     return (
         <div>
-            <Header handleLogout={handleLogout}/>
+            <Header handleLogout={handleLogout} />
             <ButtonGroup size='large' variant="text" aria-label="text button group" >
                 <Button sx={{ px: '2rem' }} onClick={() => navigate('/post/new')}>New Post</Button>
                 <Button sx={{ px: '2rem' }} onClick={() => navigate('/post/search')}>Search Posts</Button>
             </ButtonGroup>
-            {posts.posts && posts.posts.map((post) => <PostItem post={post} />)}
+            {posts.posts && posts.posts.map((post) => <PostItem key={post._id} post={post} />)}
 
         </div>
     )

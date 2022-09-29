@@ -19,3 +19,6 @@ Extra features that can are being implemented:
 - Tags for posts and quick search by hottest in tags
 
 Updates are being pushed regularly on https://github.com/AritraStark/IntvReady related to features which couldn't be completed in this time.
+
+
+I couldn't upload the ZIP file for the project so I am uploading the readme.md file with the github link mentioned above.

@@ -32,7 +32,7 @@ function PostItem(props) {
               Continue reading...
             </Typography>
           </CardContent>
-          <img src={post.baseImage} height="200px" />
+          <img src={post.baseImage} height="200px" alt='img'/>
         </Card>
       </CardActionArea>
     </Grid>

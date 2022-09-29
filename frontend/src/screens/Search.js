@@ -80,7 +80,7 @@ export default function Search(){
                     </Button>
                 </Grid>
             </Grid>
-            {res && res.map((i)=><PostItem post={i}/>)}
+            {res && res.map((i)=><PostItem key = {i._id} post={i}/>)}
             
             
         </div>
